@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">app_holosens</string>
+    <string name="get_token">获取Token</string>
 </resources>

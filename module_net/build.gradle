@@ -1,4 +1,4 @@
-if (isDebug.toString()) {
+if (isModule.toBoolean()) {
     apply plugin: 'com.android.application'
 } else {
     apply plugin: 'com.android.library'
@@ -34,9 +34,9 @@ android {
     sourceSets {
         main {
             //控制两种模式下的资源和代码配置情况
-            if (isDebug.toString()) {
-                manifest.srcFile 'src/debug/AndroidManifest.xml'
-            }else{
+            if (isModule.toBoolean()) {
+                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+            } else {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
                 //集成开发模式下排除debug文件夹中的所有Java文件
                 java {
@@ -64,18 +64,19 @@ dependencies {
     implementation project(':common')
 
     //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
     // 必要依赖，和Rxjava结合必须用到，下面会提到
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
     //retrofit添加Json解析返回数据
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
     //okhttp
-    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
+    api 'com.squareup.okhttp3:okhttp:3.14.9'
+    api 'com.squareup.okhttp3:logging-interceptor:3.8.1'
     //rxjava
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.9'
+    api 'io.reactivex.rxjava3:rxjava:3.0.9'
     //必要的rxandroid依赖,切换线程时要用到
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    api 'io.reactivex.rxjava3:rxandroid:3.0.0'
     /*fastjson*/
-    implementation 'com.alibaba:fastjson:1.2.62'
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    api 'com.alibaba:fastjson:1.2.62'
+    api 'com.github.bumptech.glide:glide:3.7.0'
 }

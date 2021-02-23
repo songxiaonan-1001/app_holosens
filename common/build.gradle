@@ -1,11 +1,11 @@
-if (isDebug.toString()) {
+if (isModule.toBoolean()) {
     apply plugin: 'com.android.application'
 } else {
     apply plugin: 'com.android.library'
 }
 
 android {
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
     defaultConfig {
@@ -33,9 +33,9 @@ android {
 
     sourceSets {
         main {
-            if (isDebug.toString()) {
+            if (isModule.toBoolean()) {
                 manifest.srcFile 'src/debug/AndroidManifest.xml'
-            }else{
+            } else {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
                 //集成开发模式下排除debug文件夹中的所有Java文件
                 java {
