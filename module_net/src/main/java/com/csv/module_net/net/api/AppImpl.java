@@ -40,6 +40,12 @@ public class AppImpl {
         }
     }
 
+    /**
+     * 获取Token
+     * @param url
+     * @param params
+     * @param listener
+     */
     public void getToken(String url, HashMap<String, Object> params, final ResponseListener listener) {
         //创建gson对象
         Gson gson = new GsonBuilder()
@@ -67,5 +73,34 @@ public class AppImpl {
                         listener.onFailed(t);
                     }
                 });
+    }
+
+    /**
+     * 获取设备列表
+     *
+     * @param url
+     * @param listener
+     * @param token
+     */
+    public void getData(String url, final ResponseListener listener, String token) {
+        Call<String> call = appService.getDeviceList(url, token);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.i(TAG, "成功:" + response.body());
+                if (response.code() == 200) {
+                    listener.onSuccess(response.body());
+                } else {
+                    listener.onSuccess(null);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.i(TAG, "失败");
+                listener.onFailed(t);
+            }
+        });
     }
 }

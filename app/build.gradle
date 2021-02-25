@@ -53,4 +53,7 @@ dependencies {
     //集成组件common
     implementation project(':common')
     implementation project(':module_net')
+
+
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }

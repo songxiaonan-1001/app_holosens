@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Observable;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -34,4 +35,17 @@ public interface AppService {
      */
     @POST
     Call<String> getToken(@Url String url, @Body RequestBody body);
+
+    /**
+     * 获取设备列表
+     *
+     * @param url
+     * @param header
+     * @return
+     */
+    @GET
+    Call<String> getDeviceList(
+            @Url String url,
+            @Header("Access-Token") String header
+    );
 }

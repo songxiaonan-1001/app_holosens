@@ -12,22 +12,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.csv.app_holosens.bean.DeviceResponseBean;
+import com.csv.app_holosens.bean.ChannelResponseBean;
 
 import java.util.List;
 
 /**
  * @author CSV
- * @describe:
- * @date: 2021/2/23
+ * @describe: 通道列表适配器
+ * @date: 2021/2/24
  */
-public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.ViewHolder> {
-    private List<DeviceResponseBean.DevicesBean> deviceLists;
+public class ChannelListAdapter extends RecyclerView.Adapter<ChannelListAdapter.ViewHolder> {
     private Context mContext;
+    private List<ChannelResponseBean.ChannelsBean> channelLists;
 
-    public DeviceListAdapter(List<DeviceResponseBean.DevicesBean> deviceLists, Context mContext) {
-        this.deviceLists = deviceLists;
+    public ChannelListAdapter(Context mContext, List<ChannelResponseBean.ChannelsBean> channelLists) {
         this.mContext = mContext;
+        this.channelLists = channelLists;
     }
 
     @NonNull
@@ -40,34 +40,18 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        DeviceResponseBean.DevicesBean devicesBean = deviceLists.get(position);
+        ChannelResponseBean.ChannelsBean channelsBean = channelLists.get(position);
 
-        if (TextUtils.equals(devicesBean.getDevice_state(), "ONLINE")) {
-            //设备在线
-            if ("NVR".equals(devicesBean.getDevice_type())) {
-                //设备类型:NVR
-                holder.imageView.setImageResource(R.mipmap.ic_nvr_online);
-            } else {
-                //设备类型:其他
-                holder.imageView.setImageResource(R.mipmap.ic_device_online);
-            }
+        if (TextUtils.isEmpty(channelsBean.getChannel_name())) {
+            holder.textView.setText(channelsBean.getChannel_id());
         } else {
-            //设备离线
-            if ("NVR".equals(devicesBean.getDevice_type())) {
-                //设备类型:NVR
-                holder.imageView.setImageResource(R.mipmap.ic_nvr_offline);
-            } else {
-                //设备类型:其他
-                holder.imageView.setImageResource(R.mipmap.ic_device_offline);
-            }
+            holder.textView.setText(channelsBean.getChannel_name());
         }
 
-        if (!TextUtils.isEmpty(devicesBean.getDevice_name())) {
-            //判断设备名是否为null
-            holder.textView.setText(devicesBean.getDevice_name());
+        if ("ONLINE".equals(channelsBean.getChannel_state())) {
+            holder.imageView.setImageResource(R.mipmap.ic_device_online);
         } else {
-            //设备名为null时,设置设备id作为设备名
-            holder.textView.setText(devicesBean.getDevice_id());
+            holder.imageView.setImageResource(R.mipmap.ic_device_offline);
         }
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -76,28 +60,27 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
                 onItemClickListener.onItemClick(position);
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
-        return deviceLists != null ? deviceLists.size() : 0;
+        return channelLists != null ? channelLists.size() : 0;
     }
 
     /**
-     * 自定义方法(设置数据并刷新)
+     * 设置数据并刷新
      *
-     * @param deviceLists
+     * @param channels
      */
-    public void setData(List<DeviceResponseBean.DevicesBean> deviceLists) {
-        this.deviceLists = deviceLists;
+    public void setData(List<ChannelResponseBean.ChannelsBean> channels) {
+        this.channelLists = channels;
         notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout linearLayout;
         TextView textView;
         ImageView imageView;
-        LinearLayout linearLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -109,7 +92,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
 
     //自定义条目点击事件(接口回调)
 
-    private OnItemClickListener onItemClickListener;
+    private DeviceListAdapter.OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {
         /**
@@ -120,7 +103,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
         void onItemClick(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(DeviceListAdapter.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 }
