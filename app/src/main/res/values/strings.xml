@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">app_holosens</string>
     <string name="get_token">获取Token</string>
+    <string name="connectting">视频连接中...</string>
 </resources>

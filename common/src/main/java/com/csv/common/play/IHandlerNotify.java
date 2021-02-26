@@ -1,8 +1,7 @@
-package com.csv.app_holosens.base;
+package com.csv.common.play;
 
 /**
  * 活动内部Handler事件通知接口
- * @author CSV
  */
 public interface IHandlerNotify {
 

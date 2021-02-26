@@ -8,8 +8,8 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.csv.app_holosens.base.IHandlerLikeNotify;
 import com.csv.common.consts.NativeCbConsts;
+import com.csv.common.play.IHandlerLikeNotify;
 import com.csv.common.utils.BackgroundHandler;
 import com.csv.common.utils.MySharedPreference;
 
