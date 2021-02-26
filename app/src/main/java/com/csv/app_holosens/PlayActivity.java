@@ -1,7 +1,12 @@
 package com.csv.app_holosens;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.View;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +34,12 @@ public class PlayActivity extends AppCompatActivity {
      * 国标设备的channelid
      */
     private String connectGbCHannelId;
+
+    /**
+     * 播放
+     */
+    private SurfaceView playSurface;
+    private SurfaceHolder surfaceHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +71,38 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void initUi() {
+        initPlay();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private void initPlay() {
+        playSurface = findViewById(R.id.playsurface);
+        playSurface.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                //响应缩放
+                return true;
+            }
+        });
 
+        surfaceHolder = playSurface.getHolder();
+
+        surfaceHolder.addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+                surfaceHolder = holder;
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+
+            }
+        });
+    }
 }
